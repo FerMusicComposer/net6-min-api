@@ -1,6 +1,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SixMinAPI.Data;
+using SixMinAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ var sqlConnectionBuilder = new SqlConnectionStringBuilder
 };
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(sqlConnectionBuilder.ConnectionString));
+builder.Services.AddScoped<ICommandRepo, CommandRepo>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
